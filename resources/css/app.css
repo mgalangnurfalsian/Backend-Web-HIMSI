@@ -1,0 +1,469 @@
+@import 'tailwindcss';
+
+/* ============================================================
+   SOURCE SCANNING — Tailwind v4 JIT
+   ============================================================ */
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../../resources/views/**/*.blade.php';
+
+/* ============================================================
+   LOCAL FONT — Inter Variable Font
+   File: public/assets/fonts/Inter-VariableFont_opsz,wght.ttf
+   Axes: opsz (14–32), wght (100–900)
+   ============================================================ */
+@font-face {
+    font-family: 'Inter';
+    src: url('../../public/assets/fonts/Inter-VariableFont_opsz,wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
+@theme {
+    /* --- Fonts --- */
+    --font-heading: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    --font-sans:    'Inter', ui-sans-serif, system-ui, sans-serif,
+                    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-mono:    ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, monospace;
+
+    /* --- Primary Color: #2a54b9 --- */
+    --color-primary-50:  #eef2fc;
+    --color-primary-100: #d5def7;
+    --color-primary-200: #adbef0;
+    --color-primary-300: #7e98e5;
+    --color-primary-400: #506fd8;
+    --color-primary-500: #2a54b9;
+    --color-primary-600: #1f3f8a;
+    --color-primary-700: #172f66;
+    --color-primary-800: #0f2044;
+    --color-primary-900: #081226;
+    --color-primary-950: #040915;
+
+    /* --- Accent Color: #ffa100 --- */
+    --color-accent-50:  #fff8e6;
+    --color-accent-100: #ffedb3;
+    --color-accent-200: #ffd966;
+    --color-accent-300: #ffca33;
+    --color-accent-400: #ffb800;
+    --color-accent-500: #ffa100;
+    --color-accent-600: #cc8100;
+    --color-accent-700: #996100;
+    --color-accent-800: #664100;
+    --color-accent-900: #332000;
+    --color-accent-950: #1a1000;
+
+    /* --- Neutral Gray --- */
+    --color-neutral-50:  #f8f9fb;
+    --color-neutral-100: #f0f2f6;
+    --color-neutral-200: #e1e5ef;
+    --color-neutral-300: #c8cfe0;
+    --color-neutral-400: #9aa4be;
+    --color-neutral-500: #6b7899;
+    --color-neutral-600: #4c5673;
+    --color-neutral-700: #343d56;
+    --color-neutral-800: #1e2438;
+    --color-neutral-900: #0d101e;
+    --color-neutral-950: #060810;
+
+    /* --- Semantic Colors --- */
+    --color-success:        #16a34a;
+    --color-success-light:  #dcfce7;
+    --color-warning:        #d97706;
+    --color-warning-light:  #fef3c7;
+    --color-danger:         #dc2626;
+    --color-danger-light:   #fee2e2;
+    --color-info:           #0ea5e9;
+    --color-info-light:     #e0f2fe;
+
+    /* --- Border Radius --- */
+    --radius-xs:  0.125rem;   /*  2px */
+    --radius-sm:  0.25rem;    /*  4px */
+    --radius-md:  0.5rem;     /*  8px */
+    --radius-lg:  0.75rem;    /* 12px */
+    --radius-xl:  1rem;       /* 16px */
+    --radius-2xl: 1.5rem;     /* 24px */
+    --radius-3xl: 2rem;       /* 32px */
+    --radius-full: 9999px;
+
+    /* --- Shadows (tinted dengan primary color) --- */
+    --shadow-xs:   0 1px 2px 0 rgb(42 84 185 / 0.04);
+    --shadow-sm:   0 1px 3px 0 rgb(42 84 185 / 0.06), 0 1px 2px -1px rgb(42 84 185 / 0.06);
+    --shadow-md:   0 4px 16px -2px rgb(42 84 185 / 0.10), 0 2px 8px -2px rgb(42 84 185 / 0.06);
+    --shadow-lg:   0 8px 32px -4px rgb(42 84 185 / 0.14), 0 4px 16px -4px rgb(42 84 185 / 0.08);
+    --shadow-xl:   0 16px 48px -8px rgb(42 84 185 / 0.18), 0 8px 24px -8px rgb(42 84 185 / 0.10);
+    --shadow-glow: 0 0 24px 4px rgb(42 84 185 / 0.25);
+    --shadow-glow-accent: 0 0 24px 4px rgb(255 161 0 / 0.30);
+
+    /* --- Transitions & Easings --- */
+    --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ease-out:    cubic-bezier(0.0, 0, 0.2, 1);
+    --ease-in:     cubic-bezier(0.4, 0, 1, 1);
+
+    --duration-fast:   150ms;
+    --duration-normal: 300ms;
+    --duration-slow:   600ms;
+    --duration-slower: 900ms;
+
+    /* --- Spacing extras --- */
+    --section-padding-y: clamp(4rem, 8vw, 8rem);
+}
+
+/* ============================================================
+   BASE LAYER — Global defaults & resets
+   ============================================================ */
+@layer base {
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
+    html {
+        font-size: 16px;
+        scroll-behavior: smooth;
+        -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+        @apply font-sans antialiased text-neutral-900 bg-neutral-50;
+        line-height: 1.6;
+    }
+
+    /* Heading menggunakan font Inter */
+    h1, h2, h3, h4, h5, h6 {
+        @apply font-heading;
+        line-height: 1.2;
+        text-wrap: balance;
+    }
+
+    /* Focus ring — konsisten di semua komponen */
+    :focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 2px var(--color-primary-500), 0 0 0 4px rgb(42 84 185 / 0.2);
+    }
+
+    /* Smooth image rendering */
+    img, video {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* Reduced motion fallback */
+    @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+        }
+    }
+
+    /* Selection color branded */
+    ::selection {
+        background-color: var(--color-primary-200);
+        color: var(--color-primary-900);
+    }
+}
+
+/* ============================================================
+   COMPONENT LAYER — Reusable helper classes
+   ============================================================ */
+@layer components {
+    /* Layout helpers */
+    .section-container {
+        @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+    }
+
+    .section-padding {
+        padding-block: var(--section-padding-y);
+    }
+
+    /* Gradient helpers */
+    .hero-gradient {
+        background: linear-gradient(135deg,
+            var(--color-primary-950) 0%,
+            var(--color-primary-800) 50%,
+            var(--color-primary-600) 100%
+        );
+    }
+
+    .hero-gradient-radial {
+        background: radial-gradient(
+            ellipse at 60% 50%,
+            var(--color-primary-700) 0%,
+            var(--color-primary-900) 60%,
+            var(--color-primary-950) 100%
+        );
+    }
+
+    /* Card base */
+    .card-base {
+        @apply bg-white rounded-2xl border border-neutral-200;
+        box-shadow: var(--shadow-sm);
+        transition: box-shadow var(--duration-normal) var(--ease-smooth),
+                    transform var(--duration-normal) var(--ease-smooth);
+    }
+
+    .card-base:hover {
+        box-shadow: var(--shadow-lg);
+        transform: translateY(-2px);
+    }
+
+    /* Badge base */
+    .badge-base {
+        @apply inline-flex items-center gap-1 font-medium rounded-full;
+        font-size: var(--text-xs);
+    }
+
+    /* Optical size untuk heading display (opsz axis Inter) */
+    .heading-display {
+        font-variation-settings: 'opsz' 32;
+    }
+
+    .body-optimized {
+        font-variation-settings: 'opsz' 14;
+    }
+
+    /* Accent underline dekoratif */
+    .accent-underline {
+        position: relative;
+    }
+
+    .accent-underline::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: var(--color-accent-500);
+        border-radius: var(--radius-full);
+    }
+
+    /* Glow effects */
+    .glow-primary {
+        box-shadow: var(--shadow-glow);
+    }
+
+    .glow-accent {
+        box-shadow: var(--shadow-glow-accent);
+    }
+
+    /* ============================================================
+       ERROR PAGE — Split Screen Design
+       ============================================================ */
+
+    /* Left panel: dark brand side with huge error code */
+    .error-left-panel {
+        background: var(--color-primary-900);
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 3rem 3rem 3rem 4rem;
+        min-height: 50vh;
+    }
+
+    @media (min-width: 768px) {
+        .error-left-panel {
+            min-height: 100vh;
+            width: 42%;
+            padding: 4rem 3rem 4rem 5rem;
+        }
+    }
+
+    /* Huge decorative error number on left panel */
+    .error-big-code {
+        font-family: var(--font-heading);
+        font-weight: 900;
+        font-size: clamp(140px, 20vw, 280px);
+        line-height: 0.85;
+        letter-spacing: -0.06em;
+        color: transparent;
+        -webkit-text-stroke: 1px rgba(255,255,255,0.15);
+        text-stroke: 1px rgba(255,255,255,0.15);
+        position: absolute;
+        bottom: -2rem;
+        right: -1rem;
+        user-select: none;
+        pointer-events: none;
+        font-variation-settings: 'opsz' 32;
+    }
+
+    /* Accent code label on left panel */
+    .error-accent-label {
+        font-family: var(--font-heading);
+        font-weight: 900;
+        font-size: clamp(5rem, 12vw, 10rem);
+        line-height: 1;
+        letter-spacing: -0.04em;
+        color: var(--color-accent-400);
+        font-variation-settings: 'opsz' 32;
+        position: relative;
+        z-index: 1;
+    }
+
+    /* Right panel: clean white side */
+    .error-right-panel {
+        flex: 1;
+        background: var(--color-neutral-50);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 3rem 2.5rem;
+        position: relative;
+        overflow: hidden;
+        min-height: 50vh;
+    }
+
+    @media (min-width: 768px) {
+        .error-right-panel {
+            min-height: 100vh;
+            padding: 4rem 5rem 4rem 6rem;
+        }
+    }
+
+    /* Decorative circle on right panel */
+    .error-deco-ring {
+        position: absolute;
+        border-radius: 50%;
+        border: 1px solid var(--color-neutral-200);
+        pointer-events: none;
+    }
+
+    /* Status badge on right panel */
+    .error-status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.375rem 0.875rem;
+        border-radius: 100px;
+        background: var(--color-accent-50);
+        border: 1px solid var(--color-accent-200);
+        color: var(--color-accent-700);
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 2rem;
+    }
+
+    /* Error page CTA button */
+    .error-cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.625rem;
+        padding: 1rem 2rem;
+        border-radius: 100px;
+        background: var(--color-primary-600);
+        color: #fff;
+        font-weight: 700;
+        font-size: 0.9375rem;
+        letter-spacing: 0.01em;
+        text-decoration: none;
+        transition: background var(--duration-normal) var(--ease-smooth),
+                    transform var(--duration-normal) var(--ease-spring),
+                    box-shadow var(--duration-normal) var(--ease-smooth);
+        box-shadow: 0 4px 24px rgba(42, 84, 185, 0.30);
+        align-self: flex-start;
+    }
+
+    .error-cta-btn:hover {
+        background: var(--color-primary-500);
+        transform: translateY(-2px) translateX(2px);
+        box-shadow: 0 8px 32px rgba(42, 84, 185, 0.40);
+    }
+
+    .error-cta-btn:active {
+        transform: translateY(0);
+    }
+
+    /* Vertical divider line between panels */
+    .error-divider {
+        width: 1px;
+        background: linear-gradient(
+            to bottom,
+            transparent,
+            var(--color-primary-400) 20%,
+            var(--color-accent-400) 50%,
+            var(--color-primary-400) 80%,
+            transparent
+        );
+        display: none;
+    }
+
+    @media (min-width: 768px) {
+        .error-divider { display: block; }
+    }
+
+    /* Footer strip on right panel */
+    .error-footer-strip {
+        position: absolute;
+        bottom: 2rem;
+        left: 5rem;
+        right: 2rem;
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--color-neutral-400);
+    }
+
+    .error-footer-strip::before {
+        content: '';
+        display: block;
+        width: 2rem;
+        height: 1px;
+        background: var(--color-neutral-300);
+        flex-shrink: 0;
+    }
+}
+
+/* ============================================================
+   UTILITIES LAYER — Custom utility classes
+   ============================================================ */
+@layer utilities {
+    .text-balance   { text-wrap: balance; }
+    .text-pretty    { text-wrap: pretty; }
+
+    .transition-smooth {
+        transition: all var(--duration-normal) var(--ease-smooth);
+    }
+
+    .transition-spring {
+        transition: all var(--duration-normal) var(--ease-spring);
+    }
+
+    /* Floating animations */
+    @keyframes float {
+        0% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-15px) rotate(3deg); }
+        100% { transform: translateY(0px) rotate(0deg); }
+    }
+    
+    .animate-float {
+        animation: float 6s ease-in-out infinite;
+    }
+    
+    .animate-float-delayed {
+        animation: float 7s ease-in-out infinite;
+        animation-delay: 2s;
+    }
+    
+    .animate-float-fast {
+        animation: float 4.5s ease-in-out infinite;
+        animation-delay: 1s;
+    }
+}
